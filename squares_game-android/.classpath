@@ -4,9 +4,10 @@
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/squares_game"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
-	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
-	<classpathentry exported="true" kind="lib" path="/squares_game/libs/gdx.jar" sourcepath="/squares_game/libs/gdx-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="libs/gdx-backend-android.jar" sourcepath="libs/gdx-backend-android-sources.jar"/>
-	<classpathentry kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/Marcus/Downloads/libgdx-nightly-20131215/gdx.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/Marcus/Downloads/libgdx-nightly-20131215/gdx-backend-android.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/Marcus/Downloads/libgdx-nightly-20131215/extensions/gdx-controllers/gdx-controllers-android.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

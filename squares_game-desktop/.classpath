@@ -2,10 +2,11 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="assets"/>
-	<classpathentry kind="src" path="/squares_game" combineaccessrules="false"/>
-	<classpathentry kind="output" path="bin"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/squares_game"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="libs/gdx-backend-lwjgl.jar" sourcepath="libs/gdx-backend-lwjgl-sources.jar"/>
-	<classpathentry kind="lib" path="libs/gdx-backend-lwjgl-natives.jar"/>
-	<classpathentry kind="lib" path="libs/gdx-natives.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Marcus/Downloads/libgdx-nightly-20131215/gdx-backend-lwjgl-natives.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Marcus/Downloads/libgdx-nightly-20131215/gdx-backend-lwjgl.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Marcus/Downloads/libgdx-nightly-20131215/gdx-natives.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Marcus/Downloads/libgdx-nightly-20131215/gdx.jar"/>
+	<classpathentry kind="output" path="bin"/>
 </classpath>

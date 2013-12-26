@@ -5,13 +5,13 @@
  * should not be modified by hand.
  */
 
-package com.me.mygdxgame;
+package com.me.squaresgame;
 
 public final class R {
     public static final class attr {
     }
     public static final class drawable {
-        public static final int ic_launcher=0x7f020000;
+        public static final int launcher=0x7f020000;
     }
     public static final class layout {
         public static final int main=0x7f030000;

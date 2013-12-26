@@ -1,4 +1,4 @@
-package com.me.mygdxgame;
+package com.me.squaresgame;
 
 import android.os.Bundle;
 
