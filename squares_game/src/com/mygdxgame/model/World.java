@@ -16,7 +16,7 @@ public class World {
 	public static final int BLOCKS_WIDTH = 8;
 	public static final int BLOCKS_HEIGHT = 15;
 	public static final int OFFSET_X = 2;
-	public static final int OFFSET_Y = 5;
+	public static final int OFFSET_Y = 2;
 
 	private static final float CAMERA_WIDTH = WorldRenderer.CAMERA_WIDTH;
 	private static final float CAMERA_HEIGHT = WorldRenderer.CAMERA_HEIGHT;
@@ -29,7 +29,7 @@ public class World {
 	List<Vector2> blocksToRemove;
 	int score, currentLevel, levelScore; 
 	long timeRemaining, msecondsPerRow, modeOffset;
-	float width, height, blocksWidth, blocksHeight, ppuBlockX, ppuBlockY;
+	float width, height, blocksWidth, blocksHeight, ppuBlockX, ppuBlockY, numBlocksY;
 	boolean isGameDone;
 
 	public World(Mode mode) {
@@ -37,6 +37,7 @@ public class World {
 		height = Gdx.graphics.getHeight();
 		ppuBlockX = width / CAMERA_WIDTH * Block.WIDTH;
 		ppuBlockY = height / CAMERA_HEIGHT * Block.HEIGHT;
+		numBlocksY = height / ppuBlockY;
 		blocksWidth = BLOCKS_WIDTH * ppuBlockX;
 		blocksHeight = BLOCKS_HEIGHT * ppuBlockY;
 		
@@ -208,7 +209,7 @@ public class World {
 	public Vector2 getCoords(int x, int y) {
 		System.out.println(x + " " +y);
 		int x2 = (int) (x / ppuBlockX) - OFFSET_X;
-		int y2 = ((int) CAMERA_HEIGHT - 1) - ((int) (y / ppuBlockY) + OFFSET_Y);
+		int y2 = ((int) numBlocksY - 1) - ((int) (y / ppuBlockY) + OFFSET_Y);
 		return new Vector2(x2, y2);
 	}
 
