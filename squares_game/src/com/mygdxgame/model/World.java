@@ -13,7 +13,7 @@ public class World {
 		MINUTE, ENDUR
 	}
 
-	public static final int BLOCKS_WIDTH = 11;
+	public static final int BLOCKS_WIDTH = 8;
 	public static final int BLOCKS_HEIGHT = 15;
 	public static final int OFFSET_X = 2;
 	public static final int OFFSET_Y = 5;
@@ -57,7 +57,7 @@ public class World {
 		for (int i = 0; i < BLOCKS_WIDTH; i++) {
 			for (int j = 0; j < BLOCKS_HEIGHT - modeOffset; j++) {
 				blocks[i][j] = new Block(
-						new Vector2(i + OFFSET_X, j + OFFSET_Y), getRandColor());
+						getBlockPosition(i,j), getRandColor());
 			}
 		}
 	}
@@ -258,6 +258,10 @@ public class World {
 	}
 	
 	/* Getters and Setters */
+	
+	public Vector2 getBlockPosition(int x, int y){
+		return new Vector2((x*Block.WIDTH) + OFFSET_X, (y*Block.HEIGHT) + OFFSET_Y);
+	}
 	
 	public void setCheckedBlocks(List<Vector2> list) {
 		this.checkedBlocks = list;

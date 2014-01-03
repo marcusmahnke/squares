@@ -76,8 +76,7 @@ public class WorldController {
 			for (int j = 0; j < World.BLOCKS_HEIGHT; j++) {
 				if (blocks[i][j] != null) {
 					Vector2 currentPos = blocks[i][j].getPosition();
-					Vector2 newPos = new Vector2(i + World.OFFSET_X, j
-							+ World.OFFSET_Y);
+					Vector2 newPos = world.getBlockPosition(i, j);
 					if (currentPos != newPos) {
 
 						if (currentPos.y > newPos.y)

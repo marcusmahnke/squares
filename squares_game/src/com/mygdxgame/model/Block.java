@@ -4,6 +4,9 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Block extends Entity {
 	
+	public static final float WIDTH = 1.00f;
+	public static final float HEIGHT = 1.00f;
+	
 	public enum Color {
 		RED, GREEN, YELLOW, BLUE
 	}
@@ -11,7 +14,7 @@ public class Block extends Entity {
 	Color color;
 
 	public Block(Vector2 position, Color color) {
-		super(position, 0.5F, 0.5F);
+		super(position, WIDTH, HEIGHT);
 		this.color = color;
 		this.velocity = Vector2.Zero;
 	}

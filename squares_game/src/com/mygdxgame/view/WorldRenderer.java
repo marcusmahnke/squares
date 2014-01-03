@@ -82,9 +82,8 @@ public class WorldRenderer {
 
 	void drawBlocks() {
 		Block[][] blocks = world.getBlocks();
-
-		for (int i = 0; i < 11; i++){
-			for (int j = 0; j < 15; j++){
+		for (int i = 0; i < world.BLOCKS_WIDTH; i++){
+			for (int j = 0; j < world.BLOCKS_HEIGHT; j++){
 				if (blocks[i][j] != null) {
 					Block currentBlock = blocks[i][j];
 					Block.Color c = currentBlock.getColor();
