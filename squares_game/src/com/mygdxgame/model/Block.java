@@ -11,7 +11,7 @@ public class Block extends Entity {
 	Color color;
 
 	public Block(Vector2 position, Color color) {
-		super(position, 1.0F, 1.0F);
+		super(position, 0.5F, 0.5F);
 		this.color = color;
 		this.velocity = Vector2.Zero;
 	}

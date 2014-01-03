@@ -86,8 +86,9 @@ public class WorldRenderer {
 		for (int i = 0; i < 11; i++){
 			for (int j = 0; j < 15; j++){
 				if (blocks[i][j] != null) {
-					Block.Color c = blocks[i][j].getColor();
-					Vector2 v = blocks[i][j].getPosition();
+					Block currentBlock = blocks[i][j];
+					Block.Color c = currentBlock.getColor();
+					Vector2 v = currentBlock.getPosition();
 					TextureRegion t;
 					switch (c) {
 					case GREEN:
@@ -107,7 +108,7 @@ public class WorldRenderer {
 					}
 
 					this.batch.draw(t, v.x * ppuX, v.y * ppuY,
-							1.0F * ppuX, 1.0F * ppuY);
+							currentBlock.getWidth() * ppuX, currentBlock.getHeight() * ppuY);
 				}
 			}
 		}
