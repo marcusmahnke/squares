@@ -24,7 +24,7 @@ public class WorldController {
 	public void touchUp(int x, int y) {
 		Block[][] blocks = world.getBlocks();
 		Vector2 coords = world.getCoords(x, y);
-
+		System.out.println(coords);
 		if ((coords.x >= 0.0f) && (coords.x < World.BLOCKS_WIDTH) && (coords.y >= 0.0f)
 				&& (coords.y < World.BLOCKS_HEIGHT)
 				&& (blocks[((int) coords.x)][((int) coords.y)] != null)) {
@@ -76,7 +76,7 @@ public class WorldController {
 			for (int j = 0; j < World.BLOCKS_HEIGHT; j++) {
 				if (blocks[i][j] != null) {
 					Vector2 currentPos = blocks[i][j].getPosition();
-					Vector2 newPos = world.getBlockPosition(i, j);
+					Vector2 newPos = world.getBlockPosition(i, j, 0);
 					if (currentPos != newPos) {
 
 						if (currentPos.y > newPos.y)

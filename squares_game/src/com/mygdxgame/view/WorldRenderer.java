@@ -25,9 +25,9 @@ public class WorldRenderer {
 		this.world = world;
 		width = Gdx.graphics.getWidth();
 		height = Gdx.graphics.getHeight();
-		ppuX = (this.width / 15.0F);
-		ppuY = (this.height / 25.0F);
-		cam = new OrthographicCamera(15.0F, 25.0F);
+		ppuX = (this.width / CAMERA_WIDTH);
+		ppuY = (this.height / CAMERA_HEIGHT);
+		cam = new OrthographicCamera(CAMERA_WIDTH, CAMERA_HEIGHT);
 		cam.position.set(7.5F, 12.5F, 0.0F);
 		batch = new SpriteBatch();
 		cam.update();
@@ -82,8 +82,8 @@ public class WorldRenderer {
 
 	void drawBlocks() {
 		Block[][] blocks = world.getBlocks();
-		for (int i = 0; i < world.BLOCKS_WIDTH; i++){
-			for (int j = 0; j < world.BLOCKS_HEIGHT; j++){
+		for (int i = 0; i < World.BLOCKS_WIDTH; i++){
+			for (int j = 0; j < World.BLOCKS_HEIGHT; j++){
 				if (blocks[i][j] != null) {
 					Block currentBlock = blocks[i][j];
 					Block.Color c = currentBlock.getColor();
@@ -106,7 +106,7 @@ public class WorldRenderer {
 						t = blueBlock;
 					}
 
-					this.batch.draw(t, v.x * ppuX, v.y * ppuY,
+					this.batch.draw(t, v.x * ppuX * Block.WIDTH, v.y * ppuY * Block.HEIGHT,
 							currentBlock.getWidth() * ppuX, currentBlock.getHeight() * ppuY);
 				}
 			}

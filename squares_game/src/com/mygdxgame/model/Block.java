@@ -4,8 +4,8 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Block extends Entity {
 	
-	public static final float WIDTH = 1.00f;
-	public static final float HEIGHT = 1.00f;
+	public static final float WIDTH = 1.0f;
+	public static final float HEIGHT = 1.0f;
 	
 	public enum Color {
 		RED, GREEN, YELLOW, BLUE

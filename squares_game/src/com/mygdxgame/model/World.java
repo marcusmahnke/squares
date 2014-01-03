@@ -35,8 +35,8 @@ public class World {
 	public World(Mode mode) {
 		width = Gdx.graphics.getWidth();
 		height = Gdx.graphics.getHeight();
-		ppuX = width / CAMERA_WIDTH;
-		ppuY = height / CAMERA_HEIGHT;
+		ppuX = width / CAMERA_WIDTH * Block.WIDTH;
+		ppuY = height / CAMERA_HEIGHT * Block.HEIGHT;
 		blocksWidth = BLOCKS_WIDTH * ppuX;
 		blocksHeight = BLOCKS_HEIGHT * ppuY;
 		
@@ -57,7 +57,7 @@ public class World {
 		for (int i = 0; i < BLOCKS_WIDTH; i++) {
 			for (int j = 0; j < BLOCKS_HEIGHT - modeOffset; j++) {
 				blocks[i][j] = new Block(
-						getBlockPosition(i,j), getRandColor());
+						getBlockPosition(i,j,0), getRandColor());
 			}
 		}
 	}
@@ -134,7 +134,7 @@ public class World {
 			int k = 1;
 			for (int j = 0; j < BLOCKS_HEIGHT - k; j++) {
 				if (blocks[x][j] == null) {
-					while (blocks[x][j + k] == null) {
+					while (blocks[x][j + k] == null) { //possibly move this loop outside for loop
 						k++;
 						if ((j + k) >= BLOCKS_HEIGHT)
 							break;
@@ -150,8 +150,7 @@ public class World {
 			if (mode == Mode.MINUTE) {
 				for (int j = 1; j <= k; j++) {
 					Gdx.app.log("new block", x + ", " + (BLOCKS_HEIGHT - j));
-					blocks[x][BLOCKS_HEIGHT - j] = new Block(new Vector2(x
-							+ OFFSET_X, BLOCKS_HEIGHT + OFFSET_Y + (k - j)),
+					blocks[x][BLOCKS_HEIGHT - j] = new Block(getBlockPosition(x, BLOCKS_HEIGHT, (k-j)),
 							getRandColor());
 				}
 			}
@@ -207,6 +206,7 @@ public class World {
 
 	// gets screen coordinates and translates them
 	public Vector2 getCoords(int x, int y) {
+		System.out.println(x + " " +y);
 		int x2 = (int) (x / ppuX) - OFFSET_X;
 		int y2 = ((int) CAMERA_HEIGHT - 1) - ((int) (y / ppuY) + OFFSET_Y);
 		return new Vector2(x2, y2);
@@ -259,8 +259,8 @@ public class World {
 	
 	/* Getters and Setters */
 	
-	public Vector2 getBlockPosition(int x, int y){
-		return new Vector2((x*Block.WIDTH) + OFFSET_X, (y*Block.HEIGHT) + OFFSET_Y);
+	public Vector2 getBlockPosition(int x, int y, int removalOffset){
+		return new Vector2(x + OFFSET_X, y + OFFSET_Y + removalOffset);
 	}
 	
 	public void setCheckedBlocks(List<Vector2> list) {
