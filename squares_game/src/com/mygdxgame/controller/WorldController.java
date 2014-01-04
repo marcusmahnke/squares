@@ -13,12 +13,20 @@ public class WorldController {
 	private static final float BLOCK_SPEED = 0.1f;
 	private static final long ONE_SECOND = 1000;
 	private World world;
-	Sound clearBlockSound;
+	Sound s1,s2,s3,s4,s5,s6,s7,s8;
 	long startTime;
 
 	public WorldController(World world) {
 		this.world = world;
 		startTime = System.currentTimeMillis();
+		s1 = Gdx.audio.newSound(Gdx.files.internal("data/sound1.wav"));
+		s2 = Gdx.audio.newSound(Gdx.files.internal("data/sound2.wav"));
+		s3 = Gdx.audio.newSound(Gdx.files.internal("data/sound3.wav"));
+		s4 = Gdx.audio.newSound(Gdx.files.internal("data/sound4.wav"));
+		s5 = Gdx.audio.newSound(Gdx.files.internal("data/sound5.wav"));
+		s6 = Gdx.audio.newSound(Gdx.files.internal("data/sound6.wav"));
+		s7 = Gdx.audio.newSound(Gdx.files.internal("data/sound7.wav"));
+		s8 = Gdx.audio.newSound(Gdx.files.internal("data/sound8.wav"));
 	}
 
 	public void touchDown(int x, int y) {
@@ -46,10 +54,13 @@ public class WorldController {
 			world.setCheckedBlocks(new ArrayList<Vector2>());
 			world.checkSurroundingBlocks((int) coords.x, (int) coords.y);
 			List<Vector2> blocksRem = world.getBlocksToRemove();
-			if (blocksRem.size() > 1) {
+			int numBlocks = blocksRem.size();
+			handleBlockSound(numBlocks);	
+			if (numBlocks > 1) {
 				int multiplier = blocksRem.size() / 3;
 				world.addToScore(blocksRem.size() * 10 * multiplier
 						* (world.getCurrentLevel() + 1));
+				
 				world.removeBlocks();
 				world.checkForEmptyCols();
 			} else {
@@ -82,6 +93,38 @@ public class WorldController {
 				startTime = System.currentTimeMillis();
 				world.decTimeRemaining();
 			}
+		}
+	}
+	
+	void handleBlockSound(int numBlocks){
+		switch(numBlocks){
+		case 1:
+			s1.play();
+			break;
+		case 2:
+			s1.play();
+			break;
+		case 3:
+			s3.play();
+			break;
+		case 4:
+			s3.play();
+			break;
+		case 5:
+			s4.play();
+			break;
+		case 6:
+			s5.play();
+			break;
+		case 7:
+			s5.play();
+			break;
+		case 8:
+			s5.play();
+			break;
+		default:
+			s5.play();
+			break;
 		}
 	}
 
