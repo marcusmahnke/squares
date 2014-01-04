@@ -13,14 +13,15 @@ import com.mygdxgame.model.World;
 public class WorldRenderer {
 	public static final float CAMERA_WIDTH = 15.0F;
 	public static final float CAMERA_HEIGHT = 25.0F;
-	
+
 	World world;
 	OrthographicCamera cam;
 	SpriteBatch batch;
 	BitmapFont HUDText;
 	TextureRegion redBlock, greenBlock, blueBlock, yellowBlock;
+	TextureRegion darkRedBlock, darkGreenBlock, darkBlueBlock, darkYellowBlock;
 	float width, height, ppuX, ppuY;
-	
+
 	public WorldRenderer(World world) {
 		this.world = world;
 		width = Gdx.graphics.getWidth();
@@ -31,8 +32,7 @@ public class WorldRenderer {
 		cam.position.set(7.5F, 12.5F, 0.0F);
 		batch = new SpriteBatch();
 		cam.update();
-		HUDText = new BitmapFont(Gdx.files.internal("data/menu.fnt"),
-				false);
+		HUDText = new BitmapFont(Gdx.files.internal("data/menu.fnt"), false);
 		HUDText.setScale(1.0F);
 		loadTextures();
 	}
@@ -56,58 +56,81 @@ public class WorldRenderer {
 	}
 
 	void loadTextures() {
-		TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("textures/textures.pack"));
+		TextureAtlas atlas = new TextureAtlas(
+				Gdx.files.internal("textures/textures.pack"));
 		redBlock = atlas.findRegion("redblock");
 		blueBlock = atlas.findRegion("blueblock");
 		greenBlock = atlas.findRegion("greenblock");
 		yellowBlock = atlas.findRegion("yellowblock");
+		darkRedBlock = atlas.findRegion("darkred");
+		darkBlueBlock = atlas.findRegion("darkblue");
+		darkGreenBlock = atlas.findRegion("darkgreen");
+		darkYellowBlock = atlas.findRegion("darkyellow");
 	}
-	
-	void drawHUD(){
-		HUDText.draw(batch, "Score: " + world.getScore(), 50.0F,
-				height - 20.0F);
+
+	void drawHUD() {
+		HUDText.draw(batch, "Score: " + world.getScore(), 50.0F, height - 20.0F);
 
 		if (world.getMode() == World.Mode.ENDUR) {
-			HUDText.draw(batch,
-					"Level: " + world.getCurrentLevel(),
+			HUDText.draw(batch, "Level: " + world.getCurrentLevel(),
 					width - 150.0F, height - 20.0F);
-			HUDText.draw(batch, "------Keep Blocks Below------",
-					width / 7.0F, 21.0F * ppuY);
+			HUDText.draw(batch, "------Keep Blocks Below------", width / 7.0F,
+					21.0F * ppuY);
 		} else if (world.getMode() == World.Mode.MINUTE) {
-			HUDText.draw(batch,
-					"Time: " + world.getTimeRemaining(),
+			HUDText.draw(batch, "Time: " + world.getTimeRemaining(),
 					width - 150.0F, height - 20.0F);
 		}
 	}
 
 	void drawBlocks() {
 		Block[][] blocks = world.getBlocks();
-		for (int i = 0; i < World.BLOCKS_WIDTH; i++){
-			for (int j = 0; j < World.BLOCKS_HEIGHT; j++){
+		for (int i = 0; i < World.BLOCKS_WIDTH; i++) {
+			for (int j = 0; j < World.BLOCKS_HEIGHT; j++) {
 				if (blocks[i][j] != null) {
 					Block currentBlock = blocks[i][j];
 					Block.Color c = currentBlock.getColor();
 					Vector2 v = currentBlock.getPosition();
+					boolean pressed = currentBlock.isPressed();
 					TextureRegion t;
-					switch (c) {
-					case GREEN:
-						t = blueBlock;
-						break;
-					case BLUE:
-						t = redBlock;
-						break;
-					case RED:
-						t = greenBlock;
-						break;
-					case YELLOW:
-						t = yellowBlock;
-						break;
-					default:
-						t = blueBlock;
+					if (pressed) {
+						switch (c) {
+						case GREEN:
+							t = darkGreenBlock;
+							break;
+						case BLUE:
+							t = darkBlueBlock;
+							break;
+						case RED:
+							t = darkRedBlock;
+							break;
+						case YELLOW:
+							t = darkYellowBlock;
+							break;
+						default:
+							t = darkBlueBlock;
+						}
+					} else {
+						switch (c) {
+						case GREEN:
+							t = greenBlock;
+							break;
+						case BLUE:
+							t = blueBlock;
+							break;
+						case RED:
+							t = redBlock;
+							break;
+						case YELLOW:
+							t = yellowBlock;
+							break;
+						default:
+							t = blueBlock;
+						}
 					}
 
-					this.batch.draw(t, v.x * ppuX * Block.WIDTH, v.y * ppuY * Block.HEIGHT,
-							currentBlock.getWidth() * ppuX, currentBlock.getHeight() * ppuY);
+					this.batch.draw(t, v.x * ppuX * Block.WIDTH, v.y * ppuY
+							* Block.HEIGHT, currentBlock.getWidth() * ppuX,
+							currentBlock.getHeight() * ppuY);
 				}
 			}
 		}

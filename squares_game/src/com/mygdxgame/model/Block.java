@@ -12,15 +12,25 @@ public class Block extends Entity {
 	}
 
 	Color color;
-
+	boolean pressed;
+	
 	public Block(Vector2 position, Color color) {
 		super(position, WIDTH, HEIGHT);
 		this.color = color;
 		this.velocity = Vector2.Zero;
+		pressed = false;
 	}
 
 	public Color getColor() {
 		return this.color;
+	}
+	
+	public void setPressed(boolean b){
+		this.pressed = b;
+	}
+	
+	public boolean isPressed(){
+		return pressed;
 	}
 
 }

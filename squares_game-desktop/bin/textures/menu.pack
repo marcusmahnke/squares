@@ -5,14 +5,14 @@ filter: Nearest,Nearest
 repeat: none
 blueblock
   rotate: false
-  xy: 387, 231
+  xy: 1, 19
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 boxgraphic
   rotate: false
-  xy: 1, 37
+  xy: 387, 407
   size: 48, 48
   split: 21, 24, 21, 23
   orig: 48, 48
@@ -20,49 +20,63 @@ boxgraphic
   index: -1
 darkblue
   rotate: false
-  xy: 1, 19
+  xy: 259, 277
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 darkgreen
   rotate: false
-  xy: 51, 69
+  xy: 387, 389
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 darkred
   rotate: false
-  xy: 387, 213
+  xy: 437, 439
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-greenblock
-  rotate: false
-  xy: 405, 231
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-redblock
+darkyellow
   rotate: false
   xy: 1, 1
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
+greenblock
+  rotate: false
+  xy: 19, 19
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+menu_font2
+  rotate: false
+  xy: 1, 37
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 0
+redblock
+  rotate: false
+  xy: 259, 259
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
 startlogo
   rotate: false
-  xy: 1, 87
+  xy: 1, 295
   size: 384, 160
   orig: 384, 160
   offset: 0, 0
   index: -1
 yellowblock
   rotate: false
-  xy: 19, 19
+  xy: 277, 277
   size: 16, 16
   orig: 16, 16
   offset: 0, 0

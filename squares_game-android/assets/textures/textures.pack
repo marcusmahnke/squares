@@ -10,23 +10,51 @@ blueblock
   orig: 16, 16
   offset: 0, 0
   index: -1
-greenblock
+darkblue
   rotate: false
   xy: 19, 1
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-redblock
+darkgreen
   rotate: false
   xy: 37, 1
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-yellowblock
+darkred
   rotate: false
   xy: 55, 1
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+darkyellow
+  rotate: false
+  xy: 73, 1
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+greenblock
+  rotate: false
+  xy: 91, 1
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+redblock
+  rotate: false
+  xy: 109, 1
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+yellowblock
+  rotate: false
+  xy: 127, 1
   size: 16, 16
   orig: 16, 16
   offset: 0, 0

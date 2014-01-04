@@ -21,12 +21,26 @@ public class WorldController {
 		startTime = System.currentTimeMillis();
 	}
 
+	public void touchDown(int x, int y) {
+		Vector2 coords = world.getCoords(x, y);
+		Block[][] blocks = world.getBlocks();
+
+		if ((coords.x >= 0.0f) && (coords.x < World.BLOCKS_WIDTH)
+				&& (coords.y >= 0.0f) && (coords.y < World.BLOCKS_HEIGHT)
+				&& (blocks[((int) coords.x)][((int) coords.y)] != null)) {
+			world.resetBlocksToRemove();
+			world.setCheckedBlocks(new ArrayList<Vector2>());
+			world.checkSurroundingBlocks((int) coords.x, (int) coords.y);
+			world.setBlocksPressed();
+		}
+	}
+
 	public void touchUp(int x, int y) {
 		Block[][] blocks = world.getBlocks();
 		Vector2 coords = world.getCoords(x, y);
-		System.out.println(coords);
-		if ((coords.x >= 0.0f) && (coords.x < World.BLOCKS_WIDTH) && (coords.y >= 0.0f)
-				&& (coords.y < World.BLOCKS_HEIGHT)
+
+		if ((coords.x >= 0.0f) && (coords.x < World.BLOCKS_WIDTH)
+				&& (coords.y >= 0.0f) && (coords.y < World.BLOCKS_HEIGHT)
 				&& (blocks[((int) coords.x)][((int) coords.y)] != null)) {
 			world.resetBlocksToRemove();
 			world.setCheckedBlocks(new ArrayList<Vector2>());
@@ -39,6 +53,7 @@ public class WorldController {
 				world.removeBlocks();
 				world.checkForEmptyCols();
 			} else {
+				world.setBlocksUnPressed();
 				world.addToScore(SCORE_PENALTY);
 			}
 		}
@@ -48,12 +63,12 @@ public class WorldController {
 		handleGameTime();
 		handleBlockMovement();
 	}
-	
-	void handleGameTime(){
+
+	void handleGameTime() {
 		long msExpired = System.currentTimeMillis() - startTime;
 
 		if (world.getMode() == World.Mode.ENDUR) {
-			if(world.computeCurrentLevel()){
+			if (world.computeCurrentLevel()) {
 				world.computeMilliSecondsPerRow();
 			}
 			long secondsPerRow = world.getMilliSecondsPerRow();
@@ -63,7 +78,7 @@ public class WorldController {
 				startTime = System.currentTimeMillis();
 			}
 		} else {
-			if(msExpired > ONE_SECOND){
+			if (msExpired > ONE_SECOND) {
 				startTime = System.currentTimeMillis();
 				world.decTimeRemaining();
 			}

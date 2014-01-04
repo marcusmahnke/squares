@@ -204,6 +204,20 @@ public class World {
 			}
 		}
 	}
+	
+	public void setBlocksPressed(){
+		for (int i = 0; i < blocksToRemove.size(); i++) {
+			Vector2 v = blocksToRemove.get(i);
+			blocks[(int) v.x][(int) v.y].setPressed(true);
+		}
+	}
+	
+	public void setBlocksUnPressed(){
+		for (int i = 0; i < blocksToRemove.size(); i++) {
+			Vector2 v = blocksToRemove.get(i);
+			blocks[(int) v.x][(int) v.y].setPressed(false);
+		}
+	}
 
 	// gets screen coordinates and translates them
 	public Vector2 getCoords(int x, int y) {
