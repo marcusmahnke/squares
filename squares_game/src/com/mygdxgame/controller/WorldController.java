@@ -97,35 +97,12 @@ public class WorldController {
 	}
 	
 	void handleBlockSound(int numBlocks){
-		switch(numBlocks){
-		case 1:
+		if(numBlocks <= 2)
 			s1.play();
-			break;
-		case 2:
-			s1.play();
-			break;
-		case 3:
-			s3.play();
-			break;
-		case 4:
-			s3.play();
-			break;
-		case 5:
+		else if(numBlocks >= 8)
+			s5.play();
+		else
 			s4.play();
-			break;
-		case 6:
-			s5.play();
-			break;
-		case 7:
-			s5.play();
-			break;
-		case 8:
-			s5.play();
-			break;
-		default:
-			s5.play();
-			break;
-		}
 	}
 
 	void handleBlockMovement() {
