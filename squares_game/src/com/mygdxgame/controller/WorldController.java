@@ -47,6 +47,7 @@ public class WorldController {
 		Block[][] blocks = world.getBlocks();
 		Vector2 coords = world.getCoords(x, y);
 
+		world.setBlocksUnPressed();
 		if ((coords.x >= 0.0f) && (coords.x < World.BLOCKS_WIDTH)
 				&& (coords.y >= 0.0f) && (coords.y < World.BLOCKS_HEIGHT)
 				&& (blocks[((int) coords.x)][((int) coords.y)] != null)) {
