@@ -213,12 +213,19 @@ public class World {
 	}
 	
 	public void setBlocksUnPressed(){
-		for (int i = 0; i < blocksToRemove.size(); i++) {
-			Vector2 v = blocksToRemove.get(i);
-			Block currentBlock = blocks[(int) v.x][(int) v.y];
-			if(currentBlock != null)
-				currentBlock.setPressed(false);
+		for(int i = 0; i < BLOCKS_WIDTH; i++){
+			for(int j = 0; j < BLOCKS_HEIGHT; j++){
+				if(blocks[i][j]!=null)
+					blocks[i][j].setPressed(false);
+			}
 		}
+		
+		//for (int i = 0; i < blocksToRemove.size(); i++) {
+		//	Vector2 v = blocksToRemove.get(i);
+		//	Block currentBlock = blocks[(int) v.x][(int) v.y];
+		//	if(currentBlock != null)
+		//		currentBlock.setPressed(false);
+		//}
 	}
 
 	// gets screen coordinates and translates them
