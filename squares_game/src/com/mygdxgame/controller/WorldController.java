@@ -15,6 +15,7 @@ public class WorldController {
 	private World world;
 	Sound s1,s2,s3,s4,s5,s6,s7,s8;
 	long startTime;
+	Vector2 touchDownCoords;
 
 	public WorldController(World world) {
 		this.world = world;
@@ -31,6 +32,7 @@ public class WorldController {
 
 	public void touchDown(int x, int y) {
 		Vector2 coords = world.getCoords(x, y);
+		touchDownCoords = coords;
 		Block[][] blocks = world.getBlocks();
 
 		if ((coords.x >= 0.0f) && (coords.x < World.BLOCKS_WIDTH)
@@ -45,8 +47,9 @@ public class WorldController {
 
 	public void touchUp(int x, int y) {
 		Block[][] blocks = world.getBlocks();
-		Vector2 coords = world.getCoords(x, y);
-
+		//Vector2 coords = world.getCoords(x, y);
+		Vector2 coords = touchDownCoords;
+		
 		world.setBlocksUnPressed();
 		if ((coords.x >= 0.0f) && (coords.x < World.BLOCKS_WIDTH)
 				&& (coords.y >= 0.0f) && (coords.y < World.BLOCKS_HEIGHT)
