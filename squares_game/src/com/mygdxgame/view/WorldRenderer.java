@@ -3,6 +3,7 @@ package com.mygdxgame.view;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -26,6 +27,12 @@ public class WorldRenderer {
 		this.world = world;
 		width = Gdx.graphics.getWidth();
 		height = Gdx.graphics.getHeight();
+		float fontScale;
+		if(height >= 1080){
+			fontScale = 2f;
+		} else{
+			fontScale = 1f;
+		}
 		ppuX = (this.width / CAMERA_WIDTH);
 		ppuY = (this.height / CAMERA_HEIGHT);
 		cam = new OrthographicCamera(CAMERA_WIDTH, CAMERA_HEIGHT);
@@ -33,7 +40,7 @@ public class WorldRenderer {
 		batch = new SpriteBatch();
 		cam.update();
 		HUDText = new BitmapFont(Gdx.files.internal("data/menu.fnt"), false);
-		HUDText.setScale(1.0F);
+		HUDText.setScale(fontScale);
 		loadTextures();
 	}
 
@@ -71,10 +78,12 @@ public class WorldRenderer {
 	void drawHUD() {
 		HUDText.draw(batch, "Score: " + world.getScore(), 50.0F, height - 20.0F);
 
+		TextBounds tb = HUDText.getBounds("Level: 000 ");
 		if (world.getMode() == World.Mode.ENDUR) {
 			HUDText.draw(batch, "Level: " + world.getCurrentLevel(),
-					width - 150.0F, height - 20.0F);
-			HUDText.draw(batch, "------Keep Blocks Below------", width / 7.0F,
+					width - tb.width, height - 20.0F);
+			tb = HUDText.getBounds("------Keep Blocks Below------");
+			HUDText.draw(batch, "------Keep Blocks Below------", (width / 2) - (tb.width / 2),
 					21.0F * ppuY);
 		} else if (world.getMode() == World.Mode.MINUTE) {
 			HUDText.draw(batch, "Time: " + world.getTimeRemaining(),

@@ -18,9 +18,10 @@ import com.mygdxgame.MyGdxGame;
 import com.mygdxgame.model.World.Mode;
 
 public class MenuScreen implements Screen {
-	private static final int buttonWidth = 140;
-	private static final int buttonHeight = 40;
-	private static final float logoPositionRatio = .375f;
+	private static final int MIN_BUTTON_WIDTH = 200;
+	private static final int MIN_BUTTON_HEIGHT = 40;
+	private static final float LOGO_POS_RATIO = .375f;
+	
 	MyGdxGame game;
 	SpriteBatch batch;
 	BitmapFont menuFont;
@@ -30,9 +31,16 @@ public class MenuScreen implements Screen {
 	TextButton button;
 	Stage stage;
 	Skin skin;
+	int buttonWidth, buttonHeight;
+	float fontScale;
 	
 	public MenuScreen(MyGdxGame game){
 		this.game = game;
+		if(Gdx.graphics.getHeight() >= 1080){
+			fontScale = 2f;
+		} else{
+			fontScale = 1f;
+		}
 	}
 	
 	@Override
@@ -55,8 +63,18 @@ public class MenuScreen implements Screen {
 		stage.clear();
 		Gdx.input.setInputProcessor(stage);
 		
+		buttonWidth = width / 3;
+		if(buttonWidth < MIN_BUTTON_WIDTH){
+			buttonWidth = MIN_BUTTON_WIDTH;
+		}
+		
+		buttonHeight = height / 20;
+		if(buttonHeight < MIN_BUTTON_HEIGHT){
+			buttonHeight = MIN_BUTTON_HEIGHT;
+		}
+		
 		logoimage = new Image(skin.getRegion("startlogo"));
-		logoimage.setPosition(width / 2 - logoimage.getWidth() / 2, height - (height*logoPositionRatio));
+		logoimage.setPosition(width / 2 - logoimage.getWidth() / 2, height - (height*LOGO_POS_RATIO));
 		stage.addActor(logoimage);
 		
 		TextButtonStyle style = initButtonStyle("blueblock", "darkblue");
@@ -77,7 +95,7 @@ public class MenuScreen implements Screen {
 		skin = new Skin();
 		skin.addRegions(atlas);
 		menuFont = new BitmapFont(Gdx.files.internal("data/menu_font.fnt"), false);
-		menuFont.setScale(1f);
+		menuFont.setScale(fontScale);
 	}
 
 	@Override

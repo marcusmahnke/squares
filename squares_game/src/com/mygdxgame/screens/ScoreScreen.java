@@ -21,10 +21,10 @@ import com.mygdxgame.model.World;
 import com.mygdxgame.model.World.Mode;
 
 public class ScoreScreen implements Screen {
-	private static final int buttonWidth = 140;
-	private static final int buttonHeight = 40;
-	private static final int boxWidth = 300;
-	private static final int boxHeight = 240;
+	private static final int MIN_BUTTON_WIDTH = 140;
+	private static final int MIN_BUTTON_HEIGHT = 40;
+	private static final int MIN_BOX_WIDTH = 300;
+	private static final int MIN_BOX_HEIGHT = 240;
 	
 	MyGdxGame game;
 	SpriteBatch batch;
@@ -33,12 +33,19 @@ public class ScoreScreen implements Screen {
 	Stage stage;
 	Skin skin;
 	
+	float fontScale;
+	int buttonWidth, buttonHeight, boxWidth, boxHeight;
 	int score, level, lastScoreIndex;
 	Mode mode;
 	int[] highScores, levels;
 
 	public ScoreScreen(MyGdxGame game) {
 		this.game = game;
+		if(Gdx.graphics.getHeight() >= 1080){
+			fontScale = 2f;
+		} else{
+			fontScale = 1f;
+		}
 	}
 
 	@Override
@@ -60,8 +67,9 @@ public class ScoreScreen implements Screen {
 		}
 		stage.clear();
 		Gdx.input.setInputProcessor(stage);
-
+		
 		lastScoreIndex = 5;
+		setHUDDimensions(width, height);
 		recordScores();
 
 		Image box = new Image(skin.getRegion("boxgraphic"));
@@ -134,9 +142,9 @@ public class ScoreScreen implements Screen {
 		skin.addRegions(atlas);
 		menuFont = new BitmapFont(Gdx.files.internal("data/menu_font.fnt"),
 				false);
-		menuFont.setScale(1f);
+		menuFont.setScale(fontScale);
 		HUDText = new BitmapFont(Gdx.files.internal("data/menu_font2.fnt"), false);
-		HUDText.setScale(1f);
+		HUDText.setScale(fontScale);
 
 	}
 
@@ -288,6 +296,28 @@ public class ScoreScreen implements Screen {
 		style.font = menuFont;
 
 		return style;
+	}
+	
+	void setHUDDimensions(int width, int height){
+		boxWidth = (int) (width * .65f);
+		if(boxWidth < MIN_BOX_WIDTH){
+			boxWidth = MIN_BOX_WIDTH;
+		}
+		
+		boxHeight = (int) (height * .3f);
+		if(boxHeight < MIN_BOX_HEIGHT){
+			boxHeight = MIN_BOX_HEIGHT;
+		}
+		
+		buttonWidth = width / 3;
+		if(buttonWidth < MIN_BUTTON_WIDTH){
+			buttonWidth = MIN_BUTTON_WIDTH;
+		}
+		
+		buttonHeight = height / 20;
+		if(buttonHeight < MIN_BUTTON_HEIGHT){
+			buttonHeight = MIN_BUTTON_HEIGHT;
+		}
 	}
 
 }
