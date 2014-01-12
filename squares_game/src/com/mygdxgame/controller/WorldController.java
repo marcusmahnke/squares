@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WorldController {
-	private static final int SCORE_PENALTY = -100;
+	//private static final int SCORE_PENALTY = -100;
 	private static final float BLOCK_SPEED = 0.1f;
 	private static final long ONE_SECOND = 1000;
 	private World world;
@@ -57,17 +57,16 @@ public class WorldController {
 			List<Vector2> blocksRem = world.getBlocksToRemove();
 			int numBlocks = blocksRem.size();
 			handleBlockSound(numBlocks);	
-			if (numBlocks > 1) {
-				int multiplier = blocksRem.size() / 3;
+			if (numBlocks > 2) {
+				//int multiplier = blocksRem.size() / 3;
 				//world.addToScore(blocksRem.size() * 10 * multiplier
 				//		* (world.getCurrentLevel() + 1));
-				world.addToScore(blocksRem.size());
-				
+				world.addToScore(numBlocks);
 				world.removeBlocks();
 				world.checkForEmptyCols();
 			} else {
 				world.setBlocksUnPressed();
-				world.addToScore(SCORE_PENALTY);
+				world.addToScore(-numBlocks);
 			}
 		}
 	}
