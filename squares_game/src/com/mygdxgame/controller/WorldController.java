@@ -10,7 +10,7 @@ import java.util.List;
 
 public class WorldController {
 	//private static final int SCORE_PENALTY = -100;
-	private static final float BLOCK_SPEED = 0.1f;
+	private static final float BLOCK_SPEED = 0.15f;
 	private static final long ONE_SECOND = 1000;
 	private World world;
 	Sound s1,s2,s3,s4,s5,s6,s7,s8;

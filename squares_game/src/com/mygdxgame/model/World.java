@@ -21,7 +21,7 @@ public class World {
 	private static final float CAMERA_WIDTH = WorldRenderer.CAMERA_WIDTH;
 	private static final float CAMERA_HEIGHT = WorldRenderer.CAMERA_HEIGHT;
 	private static final int SECONDS_TO_COMPLETE = 60;
-	private static final long STARTING_MS_PER_ROW = 4000;
+	private static final long STARTING_MS_PER_ROW = 2500;
 
 	Mode mode;
 	Block[][] blocks;
@@ -215,7 +215,9 @@ public class World {
 	public void setBlocksUnPressed(){
 		for (int i = 0; i < blocksToRemove.size(); i++) {
 			Vector2 v = blocksToRemove.get(i);
-			blocks[(int) v.x][(int) v.y].setPressed(false);
+			Block currentBlock = blocks[(int) v.x][(int) v.y];
+			if(currentBlock != null)
+				currentBlock.setPressed(false);
 		}
 	}
 
@@ -252,7 +254,7 @@ public class World {
 	// computes the number of milliseconds for a new row to spawn 
 	// based on the current level
 	public void computeMilliSecondsPerRow() {
-		long sub = 200;
+		long sub = 100;
 		long num = msecondsPerRow - sub;
 
 		if (num <= 1000)
@@ -263,8 +265,8 @@ public class World {
 
 	//changes the level if necessary (based on score) and returns true, otherwise returns false
 	public boolean computeCurrentLevel() {
-		if (levelScore >= 1000 * (currentLevel + 1)) {
-			levelScore -= 1000 * (currentLevel + 1);
+		if (levelScore >= 50) {
+			levelScore -= 50;
 			currentLevel++;
 			return true;
 		}
