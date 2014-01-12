@@ -59,8 +59,9 @@ public class WorldController {
 			handleBlockSound(numBlocks);	
 			if (numBlocks > 1) {
 				int multiplier = blocksRem.size() / 3;
-				world.addToScore(blocksRem.size() * 10 * multiplier
-						* (world.getCurrentLevel() + 1));
+				//world.addToScore(blocksRem.size() * 10 * multiplier
+				//		* (world.getCurrentLevel() + 1));
+				world.addToScore(blocksRem.size());
 				
 				world.removeBlocks();
 				world.checkForEmptyCols();

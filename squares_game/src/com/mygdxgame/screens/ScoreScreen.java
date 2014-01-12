@@ -61,6 +61,7 @@ public class ScoreScreen implements Screen {
 		stage.clear();
 		Gdx.input.setInputProcessor(stage);
 
+		lastScoreIndex = 5;
 		recordScores();
 
 		Image box = new Image(skin.getRegion("boxgraphic"));
