@@ -1,11 +1,11 @@
 package com.mygdxgame.view;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -16,14 +16,20 @@ import com.mygdxgame.model.World;
 public class WorldRenderer {
 	public static final float CAMERA_WIDTH = 15.0F;
 	public static final float CAMERA_HEIGHT = 25.0F;
-
+	public static final Color GREEN = new Color(.13f, .69f, .29f, 1f);
+	public static final Color DGREEN = new Color(.12f, .53f, .24f, 1f);
+	public static final Color BLUE = new Color(0f, .63f, .90f, 1f);
+	public static final Color DBLUE = new Color(0f, .41f, .59f, 1f);
+	public static final Color RED = new Color(.92f, .1f, .14f, 1f);
+	public static final Color DRED = new Color(.71f, .08f, .1f, 1f);
+	public static final Color YELLOW = new Color(1f, .78f, .05f, 1f);
+	public static final Color DYELLOW = new Color(.82f, .65f, .05f, 1f);			
+	
 	World world;
 	OrthographicCamera cam;
 	SpriteBatch batch;
 	ShapeRenderer shapeRenderer;
 	BitmapFont HUDText;
-	TextureRegion redBlock, greenBlock, blueBlock, yellowBlock;
-	TextureRegion darkRedBlock, darkGreenBlock, darkBlueBlock, darkYellowBlock;
 	float width, height, ppuX, ppuY, ppBlockX, ppBlockY;
 
 	public WorldRenderer(World world) {
@@ -51,8 +57,11 @@ public class WorldRenderer {
 	}
 
 	public void render() {
-		batch.begin();
+		shapeRenderer.begin(ShapeType.Filled);
 		drawBlocks();
+		shapeRenderer.end();
+		
+		batch.begin();
 		drawHUD();
 		batch.end();
 	}
@@ -69,16 +78,7 @@ public class WorldRenderer {
 	}
 
 	void loadTextures() {
-		TextureAtlas atlas = new TextureAtlas(
-				Gdx.files.internal("textures/textures.pack"));
-		redBlock = atlas.findRegion("redblock");
-		blueBlock = atlas.findRegion("blueblock");
-		greenBlock = atlas.findRegion("greenblock");
-		yellowBlock = atlas.findRegion("yellowblock");
-		darkRedBlock = atlas.findRegion("darkred");
-		darkBlueBlock = atlas.findRegion("darkblue");
-		darkGreenBlock = atlas.findRegion("darkgreen");
-		darkYellowBlock = atlas.findRegion("darkyellow");
+
 	}
 
 	void drawHUD() {
@@ -95,16 +95,13 @@ public class WorldRenderer {
 	}
 
 	void drawBlocks() {
-		batch.end();
-		shapeRenderer.begin(ShapeType.Filled);
 		shapeRenderer.setColor(.43f, .43f, .40f, 1f);
 		shapeRenderer.rect(World.OFFSET_X * ppBlockX - 1, World.OFFSET_Y * ppBlockY - 1, 
 				ppBlockX * World.BLOCKS_WIDTH + 2, ppBlockY * World.BLOCKS_HEIGHT + 2);
 		shapeRenderer.setColor(.75f, .74f, .69f, 1f);
 		shapeRenderer.rect(World.OFFSET_X * ppBlockX, World.OFFSET_Y * ppBlockY, 
 				ppBlockX * World.BLOCKS_WIDTH, ppBlockY * World.BLOCKS_HEIGHT);
-		shapeRenderer.end();
-		batch.begin();
+
 		Block[][] blocks = world.getBlocks();
 		for (int i = 0; i < World.BLOCKS_WIDTH; i++) {
 			for (int j = 0; j < World.BLOCKS_HEIGHT; j++) {
@@ -113,48 +110,44 @@ public class WorldRenderer {
 					Block.Color c = currentBlock.getColor();
 					Vector2 v = currentBlock.getPosition();
 					boolean pressed = currentBlock.isPressed();
-					TextureRegion t;
 					if (pressed) {
 						switch (c) {
 						case GREEN:
-							t = darkGreenBlock;
+							shapeRenderer.setColor(DGREEN);
 							break;
 						case BLUE:
-							t = darkBlueBlock;
+							shapeRenderer.setColor(DBLUE);
 							break;
 						case RED:
-							t = darkRedBlock;
+							shapeRenderer.setColor(DRED);
 							break;
 						case YELLOW:
-							t = darkYellowBlock;
+							shapeRenderer.setColor(DYELLOW);
 							break;
 						default:
-							t = darkBlueBlock;
+							shapeRenderer.setColor(DBLUE);
 						}
 					} else {
 						switch (c) {
 						case GREEN:
-							t = greenBlock;
+							shapeRenderer.setColor(GREEN);
 							break;
 						case BLUE:
-							t = blueBlock;
+							shapeRenderer.setColor(BLUE);
 							break;
 						case RED:
-							t = redBlock;
+							shapeRenderer.setColor(RED);
 							break;
 						case YELLOW:
-							t = yellowBlock;
+							shapeRenderer.setColor(YELLOW);
 							break;
 						default:
-							t = blueBlock;
+							shapeRenderer.setColor(BLUE);
 						}
 					}
 
-					this.batch.draw(t, v.x * ppuX * Block.WIDTH, v.y * ppuY
-							* Block.HEIGHT, currentBlock.getWidth() * ppuX,
-							currentBlock.getHeight() * ppuY);
-				} else{
-					
+					shapeRenderer.rect(v.x * ppuX * Block.WIDTH, v.y * ppuY
+							* Block.HEIGHT, currentBlock.getWidth() * ppuX, currentBlock.getHeight() * ppuY);
 				}
 			}
 		}
