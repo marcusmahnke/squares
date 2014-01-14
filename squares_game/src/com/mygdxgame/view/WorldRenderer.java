@@ -24,7 +24,7 @@ public class WorldRenderer {
 	BitmapFont HUDText;
 	TextureRegion redBlock, greenBlock, blueBlock, yellowBlock;
 	TextureRegion darkRedBlock, darkGreenBlock, darkBlueBlock, darkYellowBlock;
-	float width, height, ppuX, ppuY;
+	float width, height, ppuX, ppuY, ppBlockX, ppBlockY;
 
 	public WorldRenderer(World world) {
 		shapeRenderer = new ShapeRenderer();
@@ -39,6 +39,8 @@ public class WorldRenderer {
 		}
 		ppuX = (this.width / CAMERA_WIDTH);
 		ppuY = (this.height / CAMERA_HEIGHT);
+		ppBlockX = ppuX * Block.WIDTH;
+		ppBlockY = ppuY * Block.HEIGHT;
 		cam = new OrthographicCamera(CAMERA_WIDTH, CAMERA_HEIGHT);
 		cam.position.set(7.5F, 12.5F, 0.0F);
 		batch = new SpriteBatch();
@@ -96,9 +98,11 @@ public class WorldRenderer {
 		batch.end();
 		shapeRenderer.begin(ShapeType.Filled);
 		shapeRenderer.setColor(.43f, .43f, .40f, 1f);
-		shapeRenderer.rect(Block.WIDTH * World.OFFSET_X * ppuX-1, Block.HEIGHT * World.OFFSET_Y * ppuY-1, Block.WIDTH * ppuX * World.BLOCKS_WIDTH+2, Block.HEIGHT * ppuY * World.BLOCKS_HEIGHT+2);
+		shapeRenderer.rect(World.OFFSET_X * ppBlockX - 1, World.OFFSET_Y * ppBlockY - 1, 
+				ppBlockX * World.BLOCKS_WIDTH + 2, ppBlockY * World.BLOCKS_HEIGHT + 2);
 		shapeRenderer.setColor(.75f, .74f, .69f, 1f);
-		shapeRenderer.rect(Block.WIDTH * World.OFFSET_X * ppuX, Block.HEIGHT * World.OFFSET_Y * ppuY, Block.WIDTH * ppuX * World.BLOCKS_WIDTH, Block.HEIGHT * ppuY * World.BLOCKS_HEIGHT);
+		shapeRenderer.rect(World.OFFSET_X * ppBlockX, World.OFFSET_Y * ppBlockY, 
+				ppBlockX * World.BLOCKS_WIDTH, ppBlockY * World.BLOCKS_HEIGHT);
 		shapeRenderer.end();
 		batch.begin();
 		Block[][] blocks = world.getBlocks();
