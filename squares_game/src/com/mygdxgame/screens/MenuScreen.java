@@ -18,8 +18,6 @@ import com.mygdxgame.MyGdxGame;
 import com.mygdxgame.model.World.Mode;
 
 public class MenuScreen implements Screen {
-	private static final int MIN_BUTTON_WIDTH = 200;
-	private static final int MIN_BUTTON_HEIGHT = 40;
 	private static final float LOGO_POS_RATIO = .375f;
 	
 	MyGdxGame game;
@@ -63,15 +61,9 @@ public class MenuScreen implements Screen {
 		stage.clear();
 		Gdx.input.setInputProcessor(stage);
 		
-		buttonWidth = width / 3;
-		if(buttonWidth < MIN_BUTTON_WIDTH){
-			buttonWidth = MIN_BUTTON_WIDTH;
-		}
-		
+		buttonWidth = (int) (width * .5f);	
 		buttonHeight = height / 20;
-		if(buttonHeight < MIN_BUTTON_HEIGHT){
-			buttonHeight = MIN_BUTTON_HEIGHT;
-		}
+
 		
 		logoimage = new Image(skin.getRegion("startlogo"));
 		logoimage.setPosition(width / 2 - logoimage.getWidth() / 2, height - (height*LOGO_POS_RATIO));

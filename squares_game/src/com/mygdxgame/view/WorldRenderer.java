@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdxgame.model.Block;
 import com.mygdxgame.model.World;
@@ -18,12 +20,14 @@ public class WorldRenderer {
 	World world;
 	OrthographicCamera cam;
 	SpriteBatch batch;
+	ShapeRenderer shapeRenderer;
 	BitmapFont HUDText;
 	TextureRegion redBlock, greenBlock, blueBlock, yellowBlock;
 	TextureRegion darkRedBlock, darkGreenBlock, darkBlueBlock, darkYellowBlock;
 	float width, height, ppuX, ppuY;
 
 	public WorldRenderer(World world) {
+		shapeRenderer = new ShapeRenderer();
 		this.world = world;
 		width = Gdx.graphics.getWidth();
 		height = Gdx.graphics.getHeight();
@@ -82,9 +86,6 @@ public class WorldRenderer {
 		if (world.getMode() == World.Mode.ENDUR) {
 			HUDText.draw(batch, "Level: " + world.getCurrentLevel(),
 					width - tb.width, height - 20.0F);
-			tb = HUDText.getBounds("------Keep Blocks Below------");
-			HUDText.draw(batch, "------Keep Blocks Below------", (width / 2) - (tb.width / 2),
-					21.0F * ppuY);
 		} else if (world.getMode() == World.Mode.MINUTE) {
 			HUDText.draw(batch, "Time: " + world.getTimeRemaining(),
 					width - 150.0F, height - 20.0F);
@@ -92,6 +93,14 @@ public class WorldRenderer {
 	}
 
 	void drawBlocks() {
+		batch.end();
+		shapeRenderer.begin(ShapeType.Filled);
+		shapeRenderer.setColor(.43f, .43f, .40f, 1f);
+		shapeRenderer.rect(Block.WIDTH * World.OFFSET_X * ppuX-1, Block.HEIGHT * World.OFFSET_Y * ppuY-1, Block.WIDTH * ppuX * World.BLOCKS_WIDTH+2, Block.HEIGHT * ppuY * World.BLOCKS_HEIGHT+2);
+		shapeRenderer.setColor(.75f, .74f, .69f, 1f);
+		shapeRenderer.rect(Block.WIDTH * World.OFFSET_X * ppuX, Block.HEIGHT * World.OFFSET_Y * ppuY, Block.WIDTH * ppuX * World.BLOCKS_WIDTH, Block.HEIGHT * ppuY * World.BLOCKS_HEIGHT);
+		shapeRenderer.end();
+		batch.begin();
 		Block[][] blocks = world.getBlocks();
 		for (int i = 0; i < World.BLOCKS_WIDTH; i++) {
 			for (int j = 0; j < World.BLOCKS_HEIGHT; j++) {
@@ -140,6 +149,8 @@ public class WorldRenderer {
 					this.batch.draw(t, v.x * ppuX * Block.WIDTH, v.y * ppuY
 							* Block.HEIGHT, currentBlock.getWidth() * ppuX,
 							currentBlock.getHeight() * ppuY);
+				} else{
+					
 				}
 			}
 		}

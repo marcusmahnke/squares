@@ -21,10 +21,6 @@ import com.mygdxgame.model.World;
 import com.mygdxgame.model.World.Mode;
 
 public class ScoreScreen implements Screen {
-	private static final int MIN_BUTTON_WIDTH = 140;
-	private static final int MIN_BUTTON_HEIGHT = 40;
-	private static final int MIN_BOX_WIDTH = 300;
-	private static final int MIN_BOX_HEIGHT = 240;
 	
 	MyGdxGame game;
 	SpriteBatch batch;
@@ -300,24 +296,11 @@ public class ScoreScreen implements Screen {
 	
 	void setHUDDimensions(int width, int height){
 		boxWidth = (int) (width * .65f);
-		if(boxWidth < MIN_BOX_WIDTH){
-			boxWidth = MIN_BOX_WIDTH;
-		}
-		
 		boxHeight = (int) (height * .3f);
-		if(boxHeight < MIN_BOX_HEIGHT){
-			boxHeight = MIN_BOX_HEIGHT;
-		}
 		
-		buttonWidth = width / 3;
-		if(buttonWidth < MIN_BUTTON_WIDTH){
-			buttonWidth = MIN_BUTTON_WIDTH;
-		}
-		
+		buttonWidth = (int) (width * .5f);	
 		buttonHeight = height / 20;
-		if(buttonHeight < MIN_BUTTON_HEIGHT){
-			buttonHeight = MIN_BUTTON_HEIGHT;
-		}
+
 	}
 
 }
