@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -28,6 +30,7 @@ public class ScoreScreen implements Screen {
 	TextureAtlas atlas;
 	Stage stage;
 	Skin skin;
+	ShapeRenderer shapeRenderer;
 	
 	float fontScale;
 	int buttonWidth, buttonHeight, boxWidth, boxHeight;
@@ -50,7 +53,14 @@ public class ScoreScreen implements Screen {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
 		stage.act(delta);
-
+		shapeRenderer = new ShapeRenderer();
+		shapeRenderer.begin(ShapeType.Filled);
+		shapeRenderer.setColor(.59f, .56f, .48f, 1f);
+		shapeRenderer.rect((480 / 2 - boxWidth / 2) + 4, (800 * .6f - boxHeight / 2) - 4, boxWidth, boxHeight);
+		shapeRenderer.setColor(.96f, .94f, .88f, 1f);
+		shapeRenderer.rect(480 / 2 - boxWidth / 2, 800 * .6f - boxHeight / 2, boxWidth, boxHeight);
+		shapeRenderer.end();
+		
 		batch.begin();
 		stage.draw();
 		batch.end();
@@ -68,13 +78,9 @@ public class ScoreScreen implements Screen {
 		setHUDDimensions(width, height);
 		recordScores();
 
-		Image box = new Image(skin.getRegion("boxgraphic"));
-		box.setHeight(boxHeight);
-		box.setWidth(boxWidth);
 		float boxX = width / 2 - boxWidth / 2;
 		float boxY = height * .6f - boxHeight / 2;
-		box.setPosition(boxX, boxY);
-		stage.addActor(box);
+
 
 		Label label = new Label("Last Round: " + score,
 				new Label.LabelStyle(HUDText, Color.RED));
@@ -111,18 +117,18 @@ public class ScoreScreen implements Screen {
 				
 				label = new Label((i + 1) + ". ", new Label.LabelStyle(
 						HUDText, Color.BLACK));
-				label.setPosition(box.getX() + 15,
+				label.setPosition(boxX + 15,
 						(boxY + (.75f * boxHeight) - i * 40));
 				stage.addActor(label);
 				label = new Label("" + highScores[i], new Label.LabelStyle(HUDText,
 						color));
-				label.setPosition(box.getX() + box.getWidth() / 2 - label.getWidth()
+				label.setPosition(boxX + boxWidth / 2 - label.getWidth()
 						+ 30, (boxY + (.75f * boxHeight) - i * 40));
 				stage.addActor(label);
 				if (mode == Mode.ENDUR) {
 					label = new Label("" + levels[i], new Label.LabelStyle(HUDText,
 							color));
-					label.setPosition(box.getX() + box.getWidth() - label.getWidth()
+					label.setPosition(boxX + boxWidth - label.getWidth()
 							- 15, (boxY + (.75f * boxHeight) - i * 40));
 					stage.addActor(label);
 				}
