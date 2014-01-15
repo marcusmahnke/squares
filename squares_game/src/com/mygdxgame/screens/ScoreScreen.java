@@ -37,6 +37,7 @@ public class ScoreScreen implements Screen {
 	int score, level, lastScoreIndex;
 	Mode mode;
 	int[] highScores, levels;
+	int totalCleared;
 
 	public ScoreScreen(MyGdxGame game) {
 		this.game = game;
@@ -75,6 +76,7 @@ public class ScoreScreen implements Screen {
 		Gdx.input.setInputProcessor(stage);	
 		setHUDDimensions(width, height);
 		recordScores();
+		recordStats();
 		addLabels();
 		addButtons();		
 	}
@@ -125,10 +127,38 @@ public class ScoreScreen implements Screen {
 	}
 	
 	//initiates data from the last game played
-	public void setWorldData(int score, World.Mode mode, int level) {
+	public void setWorldData(int score, World.Mode mode, int level, int cleared) {
 		this.score = score;
 		this.level = level;
 		this.mode = mode;
+		this.totalCleared = cleared;
+	}
+	
+	void recordStats(){
+		String statStrings[];
+		String filestring, initString;
+		filestring = "stats.txt";
+		initString = "0,0,0";
+
+		FileHandle file = Gdx.files.local(filestring);
+		if (!file.exists()) {
+			file.writeString(initString, false);
+		}
+
+		String stats = file.readString();
+		statStrings = stats.split(",");
+		
+		int games = Integer.parseInt(statStrings[0]);
+		int cleared = Integer.parseInt(statStrings[1]);
+		int points = Integer.parseInt(statStrings[2]);
+
+		games++;
+		cleared += totalCleared;
+		points += score;
+		
+		String record = games+","+cleared+","+points;
+		file.writeString(record, false);
+
 	}
 	
 	//parse the scores file and write back the new score if necessary

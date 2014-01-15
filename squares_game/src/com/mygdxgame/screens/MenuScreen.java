@@ -60,6 +60,7 @@ public class MenuScreen implements Screen {
 		}
 		stage.clear();
 		Gdx.input.setInputProcessor(stage);
+		Gdx.input.setCatchBackKey(true);
 		
 		buttonWidth = (int) (width * .5f);	
 		buttonHeight = height / 20;
@@ -69,14 +70,19 @@ public class MenuScreen implements Screen {
 		logoimage.setPosition(width / 2 - logoimage.getWidth() / 2, height - (height*LOGO_POS_RATIO));
 		stage.addActor(logoimage);
 		
-		TextButtonStyle style = initButtonStyle("blueblock", "darkblue");
+		TextButtonStyle style = initButtonStyle("greenblock", "darkgreen");
 		button = initButton(buttonWidth, buttonHeight, width / 2 - buttonWidth / 2, height / 4 - buttonHeight / 4 + buttonHeight, 
-				"1-Minute", style, game.gameScreen, Mode.MINUTE);
+				"Play", style, game.gameScreen, Mode.ENDUR);
 		stage.addActor(button);
 		
-		style = initButtonStyle("greenblock", "darkgreen");
+		//style = initButtonStyle("blueblock", "darkblue");
+		//button = initButton(buttonWidth, buttonHeight, width / 2 - buttonWidth / 2, height / 4 - buttonHeight / 4, 
+		//		"1-Minute", style, game.gameScreen, Mode.MINUTE);
+		//stage.addActor(button);
+		
+		style = initButtonStyle("blueblock", "darkblue");
 		button = initButton(buttonWidth, buttonHeight, width / 2 - buttonWidth / 2, height / 4 - buttonHeight / 4, 
-				"Endurance", style, game.gameScreen, Mode.ENDUR);
+				"Statistics", style, game.statsScreen, Mode.ENDUR);
 		stage.addActor(button);
 	}
 

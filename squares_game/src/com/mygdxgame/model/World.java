@@ -27,7 +27,7 @@ public class World {
 	Block[][] blocks;
 	List<Vector2> checkedBlocks;
 	List<Vector2> blocksToRemove;
-	int score, currentLevel, levelScore; 
+	int score, currentLevel, levelScore, totalCleared; 
 	long timeRemaining, msecondsPerRow, modeOffset;
 	float width, height, blocksWidth, blocksHeight, ppuBlockX, ppuBlockY, numBlocksY;
 	boolean isGameDone;
@@ -44,6 +44,7 @@ public class World {
 		this.mode = mode;
 		currentLevel = 0;
 		levelScore = 0;
+		totalCleared = 0;
 		msecondsPerRow = STARTING_MS_PER_ROW;
 		timeRemaining = SECONDS_TO_COMPLETE;
 		isGameDone = false;
@@ -122,6 +123,7 @@ public class World {
 
 	// remove blocks in the list of blocks to remove
 	public void removeBlocks() {
+		totalCleared += blocksToRemove.size();
 		ArrayList<Integer> xVals = new ArrayList<Integer>();
 		for (int i = 0; i < blocksToRemove.size(); i++) {
 			Vector2 v = blocksToRemove.get(i);
@@ -219,13 +221,6 @@ public class World {
 					blocks[i][j].setPressed(false);
 			}
 		}
-		
-		//for (int i = 0; i < blocksToRemove.size(); i++) {
-		//	Vector2 v = blocksToRemove.get(i);
-		//	Block currentBlock = blocks[(int) v.x][(int) v.y];
-		//	if(currentBlock != null)
-		//		currentBlock.setPressed(false);
-		//}
 	}
 
 	// gets screen coordinates and translates them
@@ -321,5 +316,9 @@ public class World {
 
 	public long getTimeRemaining() {
 		return timeRemaining;
+	}
+
+	public int getTotalCleared() {
+		return totalCleared;
 	}
 }

@@ -28,7 +28,7 @@ public class GameScreen implements Screen, InputProcessor{
 		
 		controller.update(delta);
 		if(world.isGameDone()){
-			game.scoreScreen.setWorldData(world.getScore(), world.getMode(), world.getCurrentLevel());
+			game.scoreScreen.setWorldData(world.getScore(), world.getMode(), world.getCurrentLevel(), world.getTotalCleared());
 			game.setScreen(game.scoreScreen);
 		}
 		
