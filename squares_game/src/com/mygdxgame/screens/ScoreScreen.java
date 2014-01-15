@@ -13,7 +13,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -33,7 +32,8 @@ public class ScoreScreen implements Screen {
 	ShapeRenderer shapeRenderer;
 	
 	float fontScale;
-	int buttonWidth, buttonHeight, boxWidth, boxHeight;
+	int width, height, buttonWidth, buttonHeight, boxWidth, boxHeight;
+	float boxX, boxY;
 	int score, level, lastScoreIndex;
 	Mode mode;
 	int[] highScores, levels;
@@ -53,12 +53,8 @@ public class ScoreScreen implements Screen {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
 		stage.act(delta);
-		shapeRenderer = new ShapeRenderer();
 		shapeRenderer.begin(ShapeType.Filled);
-		shapeRenderer.setColor(.59f, .56f, .48f, 1f);
-		shapeRenderer.rect((480 / 2 - boxWidth / 2) + 4, (800 * .6f - boxHeight / 2) - 4, boxWidth, boxHeight);
-		shapeRenderer.setColor(.96f, .94f, .88f, 1f);
-		shapeRenderer.rect(480 / 2 - boxWidth / 2, 800 * .6f - boxHeight / 2, boxWidth, boxHeight);
+		drawScoreBox();
 		shapeRenderer.end();
 		
 		batch.begin();
@@ -71,74 +67,24 @@ public class ScoreScreen implements Screen {
 		if (stage == null) {
 			stage = new Stage(width, height, true);
 		}
-		stage.clear();
-		Gdx.input.setInputProcessor(stage);
 		
-		lastScoreIndex = 5;
+		this.width = width;
+		this.height = height;
+		
+		stage.clear();
+		Gdx.input.setInputProcessor(stage);	
 		setHUDDimensions(width, height);
 		recordScores();
-
-		float boxX = width / 2 - boxWidth / 2;
-		float boxY = height * .6f - boxHeight / 2;
-
-
-		Label label = new Label("Last Round: " + score,
-				new Label.LabelStyle(HUDText, Color.RED));
-		label.setPosition(width / 2 - label.getWidth() / 2, boxY + boxHeight
-				+ 50);
-		stage.addActor(label);
-
-		label = new Label("Your Top Scores",
-				new Label.LabelStyle(HUDText, Color.BLACK));
-		label.setPosition(width / 2 - label.getWidth() / 2, boxY + boxHeight
-				+ 10);
-		stage.addActor(label);
-
-		TextButtonStyle style = initButtonStyle("blueblock", "darkblue");
-		TextButton button = initButton(buttonWidth, buttonHeight, width / 2 - buttonWidth
-				/ 2, height / 4 - buttonHeight / 4, "Play Again", style,
-				game.gameScreen);
-		stage.addActor(button);
-
-		style = initButtonStyle("redblock", "darkred");
-		button = initButton(buttonWidth, buttonHeight, width / 2 - buttonWidth
-				/ 2, height / 4 - buttonHeight / 4 - buttonHeight,
-				"Back to Menu", style, game.menuScreen);
-		stage.addActor(button);
-
-		for (int i = 0; i < highScores.length; i++) {
-			if (highScores[i] != 0) {
-				Gdx.app.log("test", "score index:" + lastScoreIndex);
-				Color color;
-				if(i == lastScoreIndex)
-					color = Color.RED;
-				else
-					color = Color.BLACK;
-				
-				label = new Label((i + 1) + ". ", new Label.LabelStyle(
-						HUDText, Color.BLACK));
-				label.setPosition(boxX + 15,
-						(boxY + (.75f * boxHeight) - i * 40));
-				stage.addActor(label);
-				label = new Label("" + highScores[i], new Label.LabelStyle(HUDText,
-						color));
-				label.setPosition(boxX + boxWidth / 2 - label.getWidth()
-						+ 30, (boxY + (.75f * boxHeight) - i * 40));
-				stage.addActor(label);
-				if (mode == Mode.ENDUR) {
-					label = new Label("" + levels[i], new Label.LabelStyle(HUDText,
-							color));
-					label.setPosition(boxX + boxWidth - label.getWidth()
-							- 15, (boxY + (.75f * boxHeight) - i * 40));
-					stage.addActor(label);
-				}
-			}
-		}
+		addLabels();
+		addButtons();		
 	}
 
 	@Override
 	public void show() {
+		lastScoreIndex = 5;
+		
 		batch = new SpriteBatch();
+		shapeRenderer = new ShapeRenderer();
 		atlas = new TextureAtlas("textures/menu.pack");
 		skin = new Skin();
 		skin.addRegions(atlas);
@@ -147,7 +93,6 @@ public class ScoreScreen implements Screen {
 		menuFont.setScale(fontScale);
 		HUDText = new BitmapFont(Gdx.files.internal("data/menu_font2.fnt"), false);
 		HUDText.setScale(fontScale);
-
 	}
 
 	@Override
@@ -265,8 +210,6 @@ public class ScoreScreen implements Screen {
 		return s;
 	}
 
-
-
 	TextButton initButton(int x, int y, float xPos, float yPos, String text,
 			TextButtonStyle style, final Screen screen) {
 		TextButton b = new TextButton(text, style);
@@ -303,10 +246,76 @@ public class ScoreScreen implements Screen {
 	void setHUDDimensions(int width, int height){
 		boxWidth = (int) (width * .65f);
 		boxHeight = (int) (height * .3f);
+		boxX = width / 2 - boxWidth / 2;
+		boxY = height * .6f - boxHeight / 2;
 		
 		buttonWidth = (int) (width * .5f);	
 		buttonHeight = height / 20;
 
+	}
+	
+	void drawScoreBox(){
+		shapeRenderer.setColor(.59f, .56f, .48f, 1f);
+		shapeRenderer.rect((480 / 2 - boxWidth / 2) + 4, (800 * .6f - boxHeight / 2) - 4, boxWidth, boxHeight);
+		shapeRenderer.setColor(.96f, .94f, .88f, 1f);
+		shapeRenderer.rect(480 / 2 - boxWidth / 2, 800 * .6f - boxHeight / 2, boxWidth, boxHeight);
+	}
+	
+	void addButtons(){
+		TextButtonStyle style = initButtonStyle("blueblock", "darkblue");
+		TextButton button = initButton(buttonWidth, buttonHeight, width / 2 - buttonWidth
+				/ 2, height / 4 - buttonHeight / 4, "Play Again", style,
+				game.gameScreen);
+		stage.addActor(button);
+
+		style = initButtonStyle("redblock", "darkred");
+		button = initButton(buttonWidth, buttonHeight, width / 2 - buttonWidth
+				/ 2, height / 4 - buttonHeight / 4 - buttonHeight,
+				"Back to Menu", style, game.menuScreen);
+		stage.addActor(button);
+	}
+	
+	void addLabels(){
+		Label label = new Label("Last Round: " + score,
+				new Label.LabelStyle(HUDText, Color.RED));
+		label.setPosition(width / 2 - label.getWidth() / 2, boxY + boxHeight
+				+ 50);
+		stage.addActor(label);
+
+		label = new Label("Your Top Scores",
+				new Label.LabelStyle(HUDText, Color.BLACK));
+		label.setPosition(width / 2 - label.getWidth() / 2, boxY + boxHeight
+				+ 10);
+		stage.addActor(label);
+		
+		for (int i = 0; i < highScores.length; i++) {
+			if (highScores[i] != 0) {
+				Gdx.app.log("test", "score index:" + lastScoreIndex);
+				Color color;
+				if(i == lastScoreIndex)
+					color = Color.RED;
+				else
+					color = Color.BLACK;
+				
+				label = new Label((i + 1) + ". ", new Label.LabelStyle(
+						HUDText, Color.BLACK));
+				label.setPosition(boxX + 15,
+						(boxY + (.75f * boxHeight) - i * 40));
+				stage.addActor(label);
+				label = new Label("" + highScores[i], new Label.LabelStyle(HUDText,
+						color));
+				label.setPosition(boxX + boxWidth / 2 - label.getWidth()
+						+ 30, (boxY + (.75f * boxHeight) - i * 40));
+				stage.addActor(label);
+				if (mode == Mode.ENDUR) {
+					label = new Label("" + levels[i], new Label.LabelStyle(HUDText,
+							color));
+					label.setPosition(boxX + boxWidth - label.getWidth()
+							- 15, (boxY + (.75f * boxHeight) - i * 40));
+					stage.addActor(label);
+				}
+			}
+		}
 	}
 
 }
