@@ -23,15 +23,21 @@ public class WorldRenderer {
 	public static final Color DRED = new Color(.71f, .08f, .1f, 1f);
 	public static final Color YELLOW = new Color(1f, .78f, .05f, 1f);
 	public static final Color DYELLOW = new Color(.82f, .65f, .05f, 1f);			
+	public static final Color GREY = new Color(.75f, .74f, .69f, 1f);
+	public static final Color FAILING = new Color(.84f, .57f, .57f, 1f);
 	
 	World world;
 	OrthographicCamera cam;
 	SpriteBatch batch;
 	ShapeRenderer shapeRenderer;
 	BitmapFont HUDText;
+	Color bgColor;
 	float width, height, ppuX, ppuY, ppBlockX, ppBlockY;
-
+	long startTime;
+	
 	public WorldRenderer(World world) {
+		startTime = System.currentTimeMillis();
+		bgColor = GREY;
 		shapeRenderer = new ShapeRenderer();
 		this.world = world;
 		width = Gdx.graphics.getWidth();
@@ -56,6 +62,20 @@ public class WorldRenderer {
 	}
 
 	public void render() {
+		long time = System.currentTimeMillis() - startTime;
+		if(world.isReachingFailure()){
+			if(time < 500){
+				bgColor = FAILING;
+			}else if(time>=500 && time < 600){
+				bgColor = GREY;
+				//startTime = System.currentTimeMillis();
+			}else if(time>=1000){
+				//bgColor = Color.RED;
+				startTime = System.currentTimeMillis();
+			}
+		} else{
+			bgColor = GREY;
+		}
 		shapeRenderer.begin(ShapeType.Filled);
 		drawBlocks();
 		shapeRenderer.end();
@@ -97,7 +117,7 @@ public class WorldRenderer {
 		shapeRenderer.setColor(.43f, .43f, .40f, 1f);
 		shapeRenderer.rect(World.OFFSET_X * ppBlockX - 1, World.OFFSET_Y * ppBlockY - 1, 
 				ppBlockX * World.BLOCKS_WIDTH + 2, ppBlockY * World.BLOCKS_HEIGHT + 2);
-		shapeRenderer.setColor(.75f, .74f, .69f, 1f);
+		shapeRenderer.setColor(bgColor);
 		shapeRenderer.rect(World.OFFSET_X * ppBlockX, World.OFFSET_Y * ppBlockY, 
 				ppBlockX * World.BLOCKS_WIDTH, ppBlockY * World.BLOCKS_HEIGHT);
 

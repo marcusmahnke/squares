@@ -30,7 +30,7 @@ public class World {
 	int score, currentLevel, levelScore, totalCleared; 
 	long timeRemaining, msecondsPerRow, modeOffset;
 	float width, height, blocksWidth, blocksHeight, ppuBlockX, ppuBlockY, numBlocksY;
-	boolean isGameDone;
+	boolean isGameDone, isReachingFailure;
 
 	public World(Mode mode) {
 		width = Gdx.graphics.getWidth();
@@ -320,5 +320,11 @@ public class World {
 
 	public int getTotalCleared() {
 		return totalCleared;
+	}
+	public void setIsReachingFailure(boolean b){
+		isReachingFailure = b;
+	}
+	public boolean isReachingFailure(){
+		return isReachingFailure;
 	}
 }

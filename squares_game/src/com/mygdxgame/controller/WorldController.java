@@ -16,10 +16,12 @@ public class WorldController {
 	Sound s1,s2,s3,s4,s5,s6,s7,s8;
 	long startTime;
 	Vector2 touchDownCoords;
+	int heightRed;
 
 	public WorldController(World world) {
 		this.world = world;
 		startTime = System.currentTimeMillis();
+		heightRed = world.BLOCKS_HEIGHT - 4;
 		s1 = Gdx.audio.newSound(Gdx.files.internal("data/sound1.wav"));
 		s2 = Gdx.audio.newSound(Gdx.files.internal("data/sound2.wav"));
 		s3 = Gdx.audio.newSound(Gdx.files.internal("data/sound3.wav"));
@@ -110,10 +112,15 @@ public class WorldController {
 	}
 
 	void handleBlockMovement() {
+		world.setIsReachingFailure(false);
+		
 		Block[][] blocks = world.getBlocks();
 		for (int i = 0; i < World.BLOCKS_WIDTH; i++) {
 			for (int j = 0; j < World.BLOCKS_HEIGHT; j++) {
 				if (blocks[i][j] != null) {
+					if(j>=heightRed){
+						world.setIsReachingFailure(true);
+					}
 					Vector2 currentPos = blocks[i][j].getPosition();
 					Vector2 newPos = world.getBlockPosition(i, j, 0);
 					if (currentPos != newPos) {
