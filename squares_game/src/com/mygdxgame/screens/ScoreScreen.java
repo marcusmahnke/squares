@@ -275,7 +275,7 @@ public class ScoreScreen implements Screen {
 	
 	void setHUDDimensions(int width, int height){
 		boxWidth = (int) (width * .65f);
-		boxHeight = (int) (height * .3f);
+		boxHeight = (int) (height * .25f);
 		boxX = width / 2 - boxWidth / 2;
 		boxY = height * .6f - boxHeight / 2;
 		
@@ -330,18 +330,18 @@ public class ScoreScreen implements Screen {
 				label = new Label((i + 1) + ". ", new Label.LabelStyle(
 						HUDText, Color.BLACK));
 				label.setPosition(boxX + 15,
-						(boxY + (.75f * boxHeight) - i * 40));
+						(boxY + (.82f * boxHeight) - i * 40));
 				stage.addActor(label);
 				label = new Label("" + highScores[i], new Label.LabelStyle(HUDText,
 						color));
-				label.setPosition(boxX + boxWidth / 2 - label.getWidth()
-						+ 30, (boxY + (.75f * boxHeight) - i * 40));
+				label.setPosition(boxX + boxWidth / 2 - label.getWidth() / 2,
+						(boxY + (.82f * boxHeight) - i * 40));
 				stage.addActor(label);
 				if (mode == Mode.ENDUR) {
 					label = new Label("" + levels[i], new Label.LabelStyle(HUDText,
 							color));
 					label.setPosition(boxX + boxWidth - label.getWidth()
-							- 15, (boxY + (.75f * boxHeight) - i * 40));
+							- 15, (boxY + (.82f * boxHeight) - i * 40));
 					stage.addActor(label);
 				}
 			}
